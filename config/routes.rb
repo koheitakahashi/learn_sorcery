@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root 'books#index'
-  resources :users
+  resources :users do
+    member do
+      get :activate
+    end
+  end
   resources :books
   get 'login', to: 'user_sessions#new', as: :login
   post 'login', to: "user_sessions#create"
