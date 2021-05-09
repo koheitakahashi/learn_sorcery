@@ -38,9 +38,13 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  # letter_opener のための設定
-  config.action_mailer.delivery_method = :letter_opener
+  # letter_opener_web のための設定
+  config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.perform_deliveries = true
+
+  LetterOpenerWeb.configure do |config|
+    config.letters_location = Rails.root.join('your', 'new', 'path')
+  end
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
