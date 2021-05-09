@@ -7,6 +7,10 @@
 # Ignore bundler config.
 /.bundle
 
+/vendor
+/vendor/bundle
+!/vendor/bundle/ruby/3.0.0/gems/sorcery-0.16.0
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-*
