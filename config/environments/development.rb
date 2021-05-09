@@ -46,6 +46,9 @@ Rails.application.configure do
     config.letters_location = Rails.root.join('your', 'new', 'path')
   end
 
+  host = 'localhost:3000'
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
