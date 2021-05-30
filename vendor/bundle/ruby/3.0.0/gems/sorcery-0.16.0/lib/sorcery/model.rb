@@ -10,7 +10,6 @@ module Sorcery
     def authenticates_with_sorcery!
       @sorcery_config = Config.new
 
-      # NOTICE: 2021/05/09　次回はここから！
       extend ClassMethods # included here, before submodules, so they can be overriden by them.
       include InstanceMethods
       include TemporaryToken
@@ -128,7 +127,7 @@ module Sorcery
 
         set_encryption_attributes
 
-        CryptoProviders::AES256.key = @sorcery_config.encryption_key
+        CryptoProviders::AES25x6.key = @sorcery_config.encryption_key
         @sorcery_config.encryption_provider.encrypt(*tokens)
       end
 
@@ -146,6 +145,7 @@ module Sorcery
         @sorcery_config.encryption_provider.pepper = @sorcery_config.pepper if @sorcery_config.encryption_provider.respond_to?(:pepper) && @sorcery_config.pepper
       end
 
+      # NOTICE: 2021/05/16 次回はここから！
       def add_config_inheritance
         class_eval do
           def self.inherited(subclass)

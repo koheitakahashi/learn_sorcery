@@ -126,7 +126,6 @@ module Sorcery
       end
 
       protected
-
       # Tries all available sources (methods) until one doesn't return false.
       def login_from_other_sources
         result = nil
@@ -158,6 +157,7 @@ module Sorcery
         Config.after_logout.each { |c| send(c, user) }
       end
 
+      # NOTE: 次回(5/30)はここから
       def after_remember_me!(user)
         Config.after_remember_me.each { |c| send(c, user) }
       end
