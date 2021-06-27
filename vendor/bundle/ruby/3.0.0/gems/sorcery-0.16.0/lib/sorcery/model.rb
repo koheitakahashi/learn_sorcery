@@ -17,8 +17,6 @@ module Sorcery
       include_required_submodules!
 
       # This runs the options block set in the initializer on the model class.
-      pp "-" * 100
-      binding.irb
       ::Sorcery::Controller::Config.user_config.tap { |blk| blk.call(@sorcery_config) if blk }
 
       define_base_fields

@@ -1,3 +1,4 @@
+# NOTICE: 6/27 ここまでやりました。次回はここから↓
 module Sorcery
   module Providers
     # This class adds support for OAuth with Auth0.com

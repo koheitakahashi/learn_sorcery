@@ -70,12 +70,13 @@ module Sorcery
 
         def find_by_credentials(credentials)
           relation = nil
-          username_attribute_names = [:email]
+          # username_attribute_names = [:email]
           @klass.sorcery_config.username_attribute_names.each do |attribute|
             if @klass.sorcery_config.downcase_username_before_authenticating
               # lower は 小文字にするやつ
               # lower に引数渡したらどうなるの？
               # 6/13 はここまで、来週はここのわからないところからやっていく
+              # "emal = lower email の値"
               condition = @klass.arel_table[attribute].lower.eq(@klass.arel_table.lower(credentials[0]))
             else
               # "email = 〇〇"
@@ -85,6 +86,7 @@ module Sorcery
             relation = if relation.nil?
                          condition
                        else
+                        # 'condition =  "email = 〇〇"'.or("password = 〇〇")
                          relation.or(condition)
                        end
           end
@@ -122,6 +124,7 @@ module Sorcery
         end
 
         def transaction(&blk)
+          #TODO :何をしているのか後日調べる
           @klass.tap(&blk)
         end
       end
