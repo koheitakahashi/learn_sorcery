@@ -17,6 +17,7 @@ module Sorcery
       def auth_hash(access_token, hash = {})
         return hash if access_token.nil?
 
+        # access token がなんなのかみていきたい
         token_hash = hash.dup
         token_hash[:token] = access_token.token if access_token.respond_to?(:token)
         token_hash[:refresh_token] = access_token.refresh_token if access_token.respond_to?(:refresh_token)
@@ -30,6 +31,7 @@ module Sorcery
       end
 
       # Ensure that all descendant classes are loaded before run this
+      # TODO: 後でみたい。何をやっているか分からん
       def self.descendants
         ObjectSpace.each_object(Class).select { |klass| klass < self }
       end

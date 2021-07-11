@@ -76,6 +76,7 @@ module Sorcery
     end
 
     ActiveRecord::Base.send :define_singleton_method, :sorcery_adapter do
+      # 2021/07/11 はここまで。次回はここから。
       Sorcery::Adapters::ActiveRecordAdapter.from(self)
     end
   end

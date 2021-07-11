@@ -31,6 +31,7 @@ module Sorcery
 
       def build_client(options = {})
         defaults = {
+          # これどこで入ってるの？
           site: @site,
           ssl: { ca_file: Sorcery::Controller::Config.ca_file }
         }
