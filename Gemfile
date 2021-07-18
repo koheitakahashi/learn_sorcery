@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.7'
 # Not default
 gem 'pry'
 gem 'sorcery'
-gem 'rexml'
+gem "rexml"
 gem 'pundit'
 
 # Reduces boot times through caching; required in config/boot.rb
