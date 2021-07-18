@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :books
+
   authenticates_with_sorcery!
 
   before_update :setup_activation, if: -> { email_changed? }
