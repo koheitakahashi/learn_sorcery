@@ -15,7 +15,7 @@
 /vendor/bundle/ruby/3.0.0/specifications/*
 /vendor/bundle/ruby/3.0.0/gems/*
 !/vendor/bundle/ruby/3.0.0/gems/sorcery-0.16.0
-/
+!/vendor/bundle/ruby/3.0.0/gems/pundit-2.1.0
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
