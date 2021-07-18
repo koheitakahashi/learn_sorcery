@@ -27,7 +27,7 @@ gem 'jbuilder', '~> 2.7'
 
 # Not default
 gem 'pry'
-gem 'sorcery', :path => '/Users/koheitakahashi/sandbox/learn_gems/learn_sorcery/vendor/bundle/ruby/3.0.0/gems/sorcery-0.16.0'
+gem 'sorcery'
 gem 'rexml'
 gem 'pundit'
 
