@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'pry'
 gem 'sorcery', :path => '/Users/koheitakahashi/sandbox/learn_gems/learn_sorcery/vendor/bundle/ruby/3.0.0/gems/sorcery-0.16.0'
 gem 'rexml'
+gem 'pundit'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
