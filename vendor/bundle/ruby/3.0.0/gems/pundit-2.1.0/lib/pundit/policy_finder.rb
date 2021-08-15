@@ -25,6 +25,7 @@ module Pundit
     #   scope.resolve #=> <#ActiveRecord::Relation ...>
     #
     def scope
+      # policy = Post::CireteriaPolicy が入っている
       "#{policy}::Scope".safe_constantize
     end
 
@@ -81,6 +82,7 @@ module Pundit
       elsif subject.class.respond_to?(:policy_class)
         subject.class.policy_class
       else
+        # 再帰で呼ばれているので、subject が Array だったときの最後の要素に Policy がつけられる
         klass = find_class_name(subject)
         "#{klass}#{SUFFIX}"
       end

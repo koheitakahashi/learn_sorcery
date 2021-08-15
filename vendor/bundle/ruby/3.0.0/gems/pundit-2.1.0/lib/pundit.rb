@@ -91,7 +91,8 @@ module Pundit
         raise InvalidConstructorError, "Invalid #<#{policy_scope_class}> constructor is called"
       end
 
-      policy_scope.resolve
+      # resolve ってなんだろう？
+      policy_scope.resolve # PolicyFinder.new(scope).scope のインスタンス
     end
 
     # Retrieves the policy scope for the given record.
@@ -112,6 +113,8 @@ module Pundit
         raise InvalidConstructorError, "Invalid #<#{policy_scope_class}> constructor is called"
       end
 
+      # つまり: ここでユーザーが定義したアプリ側のSCOPEクラスを実行する
+      # このいったりきたり感は新しい
       policy_scope.resolve
     end
 
@@ -147,6 +150,7 @@ module Pundit
   private
 
     def pundit_model(record)
+      # NOTICE なぜ last を見に行っているのですか？
       record.is_a?(Array) ? record.last : record
     end
   end
@@ -154,13 +158,22 @@ module Pundit
   # @api private
   module Helper
     def policy_scope(scope)
+      # NOTICE: なぜ scope という名前のインスタンスメソッドなの？
       pundit_policy_scope(scope)
     end
   end
 
+  # TODO: 8/1、次回はここから読みます
+  # include されたときにコールバック的に以下が呼ばれる
+  # http://docs.ruby-lang.org/ja/3.0.0/method/Module/i/included.html
   included do
+    # TODO: 不思議な書き方どういうことだってばよ by うずまきナルト
+    # この辺が関係していそう？ ~~active_support/dependencies/autoload~~
+    # -> helper はこれが呼ばれています: AbstractController::Helpers::ClassMethod#helper
+    # https://api.rubyonrails.org/classes/AbstractController/Helpers/ClassMethods.html#method-i-helper
     helper Helper if respond_to?(:helper)
     if respond_to?(:helper_method)
+      # https://api.rubyonrails.org/classes/AbstractController/Helpers/ClassMethods.html#method-i-helper_method
       helper_method :policy
       helper_method :pundit_policy_scope
       helper_method :pundit_user
@@ -172,6 +185,7 @@ protected
   # @return [Boolean] whether authorization has been performed, i.e. whether
   #                   one {#authorize} or {#skip_authorization} has been called
   def pundit_policy_authorized?
+    # ?: @_ はどういう意味？
     !!@_pundit_policy_authorized
   end
 
@@ -189,6 +203,7 @@ protected
   # @raise [AuthorizationNotPerformedError] if authorization has not been performed
   # @return [void]
   def verify_authorized
+    # pundit_policy_authorized? は authorize が呼ばれなければ false?（nil?） のままなので、不要な authorize を検知することができる
     raise AuthorizationNotPerformedError, self.class unless pundit_policy_authorized?
   end
 
@@ -213,13 +228,16 @@ protected
   # @param policy_class [Class] the policy class we want to force use of
   # @raise [NotAuthorizedError] if the given query method returned false
   # @return [Object] Always returns the passed object record
+  # 心の声: query から実態が分かりづらい...
   def authorize(record, query = nil, policy_class: nil)
+    # http://api.rubyonrails.org/classes/AbstractController/Base.html#method-i-action_name
     query ||= "#{action_name}?"
 
     @_pundit_policy_authorized = true
 
     policy = policy_class ? policy_class.new(pundit_user, record) : policy(record)
 
+    # comment: query はstringやsym がくるんで、policy.query とはかけない
     raise NotAuthorizedError, query: query, record: record, policy: policy unless policy.public_send(query)
 
     record
