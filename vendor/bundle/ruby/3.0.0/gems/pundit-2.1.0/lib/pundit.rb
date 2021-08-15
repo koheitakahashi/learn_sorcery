@@ -175,6 +175,8 @@ module Pundit
     if respond_to?(:helper_method)
       # https://api.rubyonrails.org/classes/AbstractController/Helpers/ClassMethods.html#method-i-helper_method
       helper_method :policy
+      # コメント: なぜ、private である pundit_policy_scope という名前で helper に定義しようとしているの？
+      # => helper_method だとこれを include pundit した controller とその継承先（viewも含む）でしか使えなくすることができる
       helper_method :pundit_policy_scope
       helper_method :pundit_user
     end
@@ -305,6 +307,7 @@ protected
   # @param record [Object] the object we're retrieving params for
   # @return [ActionController::Parameters] the params
   def pundit_params_for(record)
+    # つまり、UserPolicy.param_key => "user"
     params.require(PolicyFinder.new(record).param_key)
   end
 

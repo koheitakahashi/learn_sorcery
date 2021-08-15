@@ -95,6 +95,7 @@ end
 
 class CommentScope
   attr_reader :original_object
+
   def initialize(original_object)
     @original_object = original_object
   end

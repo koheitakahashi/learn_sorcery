@@ -65,6 +65,7 @@ module Pundit
       elsif model.is_a?(Class)
         model.to_s.demodulize.underscore
       else
+        # コメント: model.class の時点でこれは Class を継承しているから上が呼ばれて、ここはたどり着かないのでは？
         model.class.to_s.demodulize.underscore
       end
     end
